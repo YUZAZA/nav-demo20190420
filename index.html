@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>我的导航</title>
+		<link rel="stylesheet" href="./style.css">
+	</head>
+<body>
+	<header></header>
+	
+	<main>
+		<div class="wrapper" id="main1"></div>
+		<style>
+
+		</style>
+		</main>
+		
+	<footer></footer>
+	<script>
+		// 1.初始化数据
+		var hashA = init()
+		var keys = hashA['keys']
+		var hash = hashA['hash']
+		
+		// 2.生成键盘
+		generateKeyboard(keys,hash)
+		
+		// 3. 监听键盘
+		listenToUser(hash)
+
+//下面是工具函数
+		function init(){
+			var keys = {
+				'0':{0:'q',1:'w',2:'e',3:'r',4:'t',5:'y',6:'u',7:'i',8:'o',9:'p',length:10},
+				'1':{0:'a',1:'s',2:'d',3:'f',4:'g',5:'h',6:'j',7:'k',8:'l',length:9},
+				'2':{0:'z',1:'x',2:'c',3:'v',4:'b',5:'n',6:'m',length:7},
+				'length': 3
+			}
+			var hash = {
+				'q': 'qidian.com',
+				'w': 'weibo.com',
+				'e': 'ele.com',
+				'r': 'runoob.com',
+				't': 'taobao.com',
+				'y': 'youtube.com',
+				'u': 'uuu9.com',
+				'i': 'iqiyi.com',
+				'o': 'opera.com',
+				'p': 'people.com',
+				'a': 'apple.com',
+				's': 'sina.com',
+				'd': 'dangdang.com',
+				'f': 'fang.com',
+				'g': 'google.com',
+				'h': 'hupu.com',
+				'j': 'jd.com',
+				'k': 'kankan.com',
+				'l': 'lofter.com',
+				'z': 'zihu.com',
+				'x': 'xunlei.com',
+				'c': 'ccb.com',
+				'v': 'www.vip.com',
+				'b': 'bilibili.com',
+				'n': 'ntce.com',
+				'm': 'mi.com'
+			}
+				// 取出 localStorage 中的 zzz 对应的hash
+				var hashInLocalStorage = getFromLocalStorage('zzz')
+				if(hashInLocalStorage){
+					hash = hashInLocalStorage
+				}
+					return {
+						"keys":keys,
+						"hash":hash	
+					}
+		}
+
+		function generateKeyboard(keys,hash){
+			// 遍历 keys, 生成 kbd 标签
+			for(var index=0; index< keys['length']; index = index+1 ){
+				var div1 = tag('div')
+				div1.className = 'row'
+			
+				main1 .appendChild(div1)
+			
+
+			var row = keys[index]
+			for(var index2 =0;index2< row['length']; index2 = index2 + 1){
+							
+				var span = createSpan(row[index2])
+													
+				var image = createImg(hash[row[index2]])
+				
+				var buttonxxx = createButton(row[index2])
+
+				var kbd1 = tag('kbd')
+				kbd1.className = 'key'
+
+				kbd1.appendChild(span)
+				kbd1.appendChild(image)
+				kbd1 .appendChild(buttonxxx)
+				div1.appendChild(kbd1)
+			}
+		}
+	}
+		
+		function createSpan(textContent){
+			var span = tag('span')
+			span.textContent = textContent
+			span.className = "text"
+			return span
+		}
+		function createButton(id){
+			var buttonxxx = tag('button')
+				buttonxxx.textContent = '编辑'
+				buttonxxx.id = id
+
+				buttonxxx.onclick = function(suibian){
+					var button2 = suibian['target']
+					var img2 = button2.previousSibling
+					var key = button2['id']//得到q w e r t
+					var x = prompt('给我一个网址')//得到输入的网址
+					hash[key] = x//让按钮对应网址
+					img2.src = 'http://'+x + '/favicon.ico'
+				img2.onerror = function(xxx){
+					xxx.target.src = '//i.loli.net/2019/04/16/5cb5f50c701c7.png'
+				}
+					localStorage.setItem('zzz', JSON.stringify(hash))
+					console.log(hash)
+				}
+			return buttonxxx
+		}
+		function createImg(domain){
+			var image = tag('img')
+			if (domain) {
+				image.src = '//'+ domain + '/favicon.ico'
+				}else{
+					image.src = '//i.loli.net/2019/04/16/5cb5f50c701c7.png'
+				}
+				image.onerror = function(xxx){
+					xxx.target.src = '//i.loli.net/2019/04/16/5cb5f50c701c7.png'
+				}
+				return image
+		}
+		
+
+
+		function tag(tagName){
+			return document.createElement(tagName)
+		}
+		function getFromLocalStorage(name){
+			return JSON.parse(localStorage.getItem(name) || 'null')
+		}
+
+		function listenToUser(hash){
+		document.onkeypress = function(xzkjcnxlkcjlk){
+				var key = xzkjcnxlkcjlk['key'] // q w e
+				var website = hash[key]
+				//location.href = 'http://'+website
+				window.open('http://'+website, '_blank')
+			}
+		}
+	</script>
+</body>
+</html>
